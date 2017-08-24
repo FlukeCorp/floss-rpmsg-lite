@@ -56,7 +56,7 @@ RL_PACKED_BEGIN
 struct rpmsg_std_msg
 {
     struct rpmsg_std_hdr hdr; /*!< RPMsg message header */
-    unsigned char data[1];    /*!< bytes of message payload data */
+    unsigned char data[0];    /*!< bytes of message payload data */
 } RL_PACKED_END;
 
 /* rpmsg_std_hdr contains a reserved field,
@@ -697,6 +697,7 @@ void *rpmsg_lite_alloc_tx_buffer(struct rpmsg_lite_instance *rpmsg_lite_dev, uns
     reserved = (struct rpmsg_hdr_reserved *)&rpmsg_msg->hdr.reserved;
     reserved->idx = idx;
 
+    *size -= sizeof(struct rpmsg_std_hdr);
     return rpmsg_msg->data;
 }
 
