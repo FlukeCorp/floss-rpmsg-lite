@@ -132,10 +132,10 @@ static inline int vring_size(unsigned int num, unsigned long align)
 {
     int size;
 
-    size = num * sizeof(struct vring_desc);
-    size += sizeof(struct vring_avail) + (num * sizeof(uint16_t)) + sizeof(uint16_t);
-    size = (size + align - 1) & ~(align - 1);
-    size += sizeof(struct vring_used) + (num * sizeof(struct vring_used_elem)) + sizeof(uint16_t);
+    size = (int)(num * sizeof(struct vring_desc));
+    size += (int)(sizeof(struct vring_avail) + (num * sizeof(uint16_t)) + sizeof(uint16_t));
+    size = (int)(((unsigned long)size + align - 1) & ~(align - 1));
+    size += (int)(sizeof(struct vring_used) + (num * sizeof(struct vring_used_elem)) + sizeof(uint16_t));
     return (size);
 }
 
